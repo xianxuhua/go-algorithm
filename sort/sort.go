@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-const n = 100000
+const n = 1000000
 
 func generateRandomArr() [n]int {
 	rand.NewSource(1)
@@ -31,6 +31,15 @@ func generateNearOrderedArr(swapNum int) [n]int {
 	return arr
 }
 
+func generateManyRepeatArr() [n]int {
+	rand.NewSource(1)
+	var arr [n]int
+	for i := 0; i < n; i++ {
+		arr[i] = rand.Intn(10)
+	}
+	return arr
+}
+
 func runSort(opt func([]int) []int, arr [n]int) {
 	startTime := time.Now()
 	target := make([]int, n)
@@ -44,10 +53,11 @@ func runSort(opt func([]int) []int, arr [n]int) {
 
 func main() {
 	//arr := generateNearOrderedArr(10)
-	arr := generateRandomArr()
-	runSort(selectionSort, arr)
-	runSort(insertionSort, arr)
+	arr := generateManyRepeatArr()
+	//runSort(selectionSort, arr)
+	//runSort(insertionSort, arr)
 	runSort(mergeSort, arr)
+	runSort(quickSort, arr)
 }
 
 func selectionSort(arr []int) []int {
@@ -132,6 +142,34 @@ func merge(arr1, arr2 []int) []int {
 	return newArr
 }
 
-func quickSort(arr []int) {
+func quickSort(arr []int) []int {
+	return _quickSort(arr, 0, len(arr)-1)
+}
 
+func _quickSort(arr []int, l, r int) []int {
+	if l >= r {
+		return arr
+	}
+
+	p := partition(arr, l, r)
+	arr = _quickSort(arr, l, p-1)
+	arr = _quickSort(arr, p+1, r)
+	return arr
+}
+
+// arr[l, p-1] < arr[p] < arr[p+1, r]
+func partition(arr []int, l, r int) int {
+	randI := rand.Intn(r-l) + l
+	arr[randI], arr[l] = arr[l], arr[randI]
+	j := l
+	v := arr[j]
+	for i := l + 1; i <= r; i++ {
+		if arr[i] <= v {
+			arr[i], arr[j+1] = arr[j+1], arr[i]
+			j++
+		}
+	}
+
+	arr[l], arr[j] = arr[j], arr[l]
+	return j
 }

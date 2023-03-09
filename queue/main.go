@@ -1,4 +1,4 @@
-package main
+package queue
 
 import "fmt"
 
@@ -13,6 +13,9 @@ func (q *Queue) Pop() int {
 	v := q.arr[0]
 	q.arr = q.arr[1:]
 	return v
+}
+func (q *Queue) Len() int {
+	return len(q.arr)
 }
 
 func main() {
