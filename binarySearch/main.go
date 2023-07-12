@@ -21,6 +21,21 @@ func BinarySearch(arr []int, v int) int {
 	return -1
 }
 
+// [l...r)
+func binarySearch2(arr []int, l, r, target int) int {
+	if l >= r {
+		return -1
+	}
+	mid := (l + r) / 2
+	if arr[mid] == target {
+		return mid
+	} else if arr[mid] > target {
+		return binarySearch2(arr, l, mid, target)
+	} else {
+		return binarySearch2(arr, mid+1, r, target)
+	}
+}
+
 func main() {
 	arr := []int{}
 	n := 10000000

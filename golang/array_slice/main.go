@@ -18,9 +18,12 @@ func main() {
 	f2(a2)
 	fmt.Println(a1, a2)
 	//	切片一旦扩容，指向一个新的底层数组
-	//容量小于 1024时，使用2倍扩容，大于1024时，使用1.76倍扩容
-	for i := 0; i < 1000; i++ {
+	//容量小于 1024时，使用2倍扩容，大于1024时，使用1.43倍扩容
+	for i := 0; i < 1200; i++ {
 		a2 = append(a2, i)
 		fmt.Println(cap(a2), len(a2))
 	}
+
+	a3 := make([]int, 2, 5)
+	fmt.Println(a3)
 }
