@@ -38,4 +38,6 @@ func main() {
 		vals = append(vals, node.Val)
 	})
 	fmt.Println(vals)
+	tree := tree.AddFromArray([]int{1, 3, 2, 4})
+	fmt.Println(tree.IsBST())
 }

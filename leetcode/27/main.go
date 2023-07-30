@@ -2,21 +2,33 @@ package main
 
 import "fmt"
 
+//func removeElement(nums []int, val int) int {
+//	j := 0
+//	for i := 0; i < len(nums); i++ {
+//		if nums[i] == val {
+//			nums[i], nums[j] = nums[j], nums[i]
+//			j++
+//		}
+//	}
+//	res := len(nums) - j
+//	for i := 0; i < res; i++ {
+//		nums[i] = nums[j]
+//		j++
+//	}
+//
+//	return res
+//}
+
 func removeElement(nums []int, val int) int {
-	j := 0
+	res := []int{}
 	for i := 0; i < len(nums); i++ {
-		if nums[i] == val {
-			nums[i], nums[j] = nums[j], nums[i]
-			j++
+		if nums[i] != val {
+			res = append(res, nums[i])
 		}
 	}
-	res := len(nums) - j
-	for i := 0; i < res; i++ {
-		nums[i] = nums[j]
-		j++
-	}
 
-	return res
+	copy(nums, res)
+	return len(nums[:len(res)])
 }
 
 func main() {
