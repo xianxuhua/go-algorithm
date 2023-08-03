@@ -2,29 +2,36 @@ package main
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 )
 
 func plusOne(digits []int) []int {
-	stringDigits := []string{}
-	for _, v := range digits {
-		stringDigits = append(stringDigits, strconv.Itoa(v))
+	digits[len(digits)-1] += 1
+	if digits[len(digits)-1] < 10 {
+		return digits
 	}
-
-	i, _ := strconv.Atoi(strings.Join(stringDigits, ""))
-	fmt.Println(i)
-	i++
-	a := strconv.Itoa(i)
-	res := []int{}
-	for _, v := range a {
-		atoi, _ := strconv.Atoi(string(v))
-		res = append(res, atoi)
+	for i := len(digits) - 1; i > 0; i-- {
+		if digits[i] >= 10 {
+			digits[i] = 0
+			digits[i-1] += 1
+		} else {
+			break
+		}
 	}
-	return res
+	if digits[0] >= 10 {
+		res := []int{1}
+		for i := 0; i < len(digits); i++ {
+			res = append(res, 0)
+		}
+		return res
+	} else {
+		return digits
+	}
 }
 
 func main() {
+	fmt.Println(plusOne([]int{9}))
+	fmt.Println(plusOne([]int{9, 9}))
+	fmt.Println(plusOne([]int{1, 9}))
 	fmt.Println(plusOne([]int{1, 2, 3}))
 	fmt.Println(plusOne([]int{4, 3, 2, 1}))
 	fmt.Println(plusOne([]int{0}))

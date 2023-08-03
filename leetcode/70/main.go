@@ -3,17 +3,29 @@ package main
 import "fmt"
 
 func climbStairs(n int) int {
-	if n == 1 {
-		return 1
-	}
-	if n == 2 {
-		return 2
-	}
+	//m := make(map[int]int)
+	//if n == 1 {
+	//	return 1
+	//}
+	//if n == 2 {
+	//	return 2
+	//}
+	//if _, ok := m[n]; ok {
+	//	return m[n]
+	//} else {
+	//	r := climbStairs(n-1) + climbStairs(n-2)
+	//	m[n] = r
+	//	return r
+	//}
 
-	return climbStairs(n-1) + climbStairs(n-2)
+	a, b := 0, 1
+	for i := 0; i < n; i++ {
+		a, b = b, a+b
+	}
+	return b
 }
 
 func main() {
-	fmt.Println(2)
-	fmt.Println(3)
+
+	fmt.Println(climbStairs(45))
 }

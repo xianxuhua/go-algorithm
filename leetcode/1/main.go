@@ -5,14 +5,23 @@ import (
 )
 
 func twoSum(nums []int, target int) []int {
+	//for i := 0; i < len(nums); i++ {
+	//	for j := i + 1; j < len(nums); j++ {
+	//		if nums[i]+nums[j] == target {
+	//			return []int{i, j}
+	//		}
+	//	}
+	//}
+	//return []int{0, 0}
+	m := make(map[int]int)
 	for i := 0; i < len(nums); i++ {
-		for j := i + 1; j < len(nums); j++ {
-			if nums[i]+nums[j] == target {
-				return []int{i, j}
-			}
+		if v, ok := m[target-nums[i]]; !ok {
+			m[nums[i]] = i
+		} else {
+			return []int{v, i}
 		}
 	}
-	return []int{0, 0}
+	return []int{}
 }
 
 func main() {

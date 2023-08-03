@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func merge(nums1 []int, m int, nums2 []int, n int) {
 	newArr := make([]int, len(nums1))
 	i, j, k := 0, 0, 0
@@ -25,8 +27,11 @@ func merge(nums1 []int, m int, nums2 []int, n int) {
 		k++
 	}
 	copy(nums1, newArr)
+	fmt.Println(nums1)
 }
 
 func main() {
 	merge([]int{1, 2, 3, 0, 0, 0}, 3, []int{2, 5, 6}, 3)
+	merge([]int{1}, 1, []int{}, 0)
+	merge([]int{0}, 0, []int{1}, 1)
 }
