@@ -6,12 +6,12 @@ import (
 )
 
 func containsNearbyDuplicate(nums []int, k int) bool {
+	m := make(map[int]int)
 	for i := 0; i < len(nums); i++ {
-		for j := i + 1; j < len(nums); j++ {
-			if nums[i] == nums[j] && int(math.Abs(float64(i-j))) <= k {
-				return true
-			}
+		if v, ok := m[nums[i]]; ok && int(math.Abs(float64(v-i))) <= k {
+			return true
 		}
+		m[nums[i]] = i
 	}
 
 	return false

@@ -1,7 +1,5 @@
 package stack
 
-import "fmt"
-
 type Stack struct {
 	arr []string
 }
@@ -21,27 +19,6 @@ func (s *Stack) Len() int {
 	return len(s.arr)
 }
 
-// 括号匹配
-func validParentheses(s string) bool {
-	stack := Stack{}
-	for i := 0; i < len(s); i++ {
-		v := fmt.Sprintf("%c", s[i])
-		if v == "{" || v == "[" || v == "(" {
-			stack.Push(v)
-		} else if v == "}" || v == "]" || v == ")" {
-			if stack.Top() == "{" && v == "}" {
-				stack.Pop()
-			} else if stack.Top() == "[" && v == "]" {
-				stack.Pop()
-			} else if stack.Top() == "(" && v == ")" {
-				stack.Pop()
-			}
-		}
-	}
-
-	return stack.Len() == 0
-}
-
 func main() {
 	//s := Stack{}
 	//s.Push(1)
@@ -50,5 +27,4 @@ func main() {
 	//fmt.Println(s.Pop())
 	//fmt.Println(s.Pop())
 	//fmt.Println(s.Pop())
-	fmt.Println(validParentheses("{[()]]"))
 }

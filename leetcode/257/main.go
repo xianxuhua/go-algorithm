@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 )
 
 type TreeNode struct {
@@ -11,25 +12,24 @@ type TreeNode struct {
 }
 
 func binaryTreePaths(root *TreeNode) []string {
+	var res []string
 	if root == nil {
-		return []string{}
+		return res
 	}
-	_binaryTreePaths(root, func(node *TreeNode) {
-		fmt.Println(node.Val)
-	})
-	return []string{}
-}
-
-func _binaryTreePaths(root *TreeNode, opt func(node *TreeNode)) {
 	if root.Left == nil && root.Right == nil {
-		opt(root)
+		res = append(res, strconv.Itoa(root.Val))
+		return res
 	}
-	if root.Left != nil {
-		_binaryTreePaths(root.Left, opt)
+
+	leftPaths := binaryTreePaths(root.Left)
+	for i := 0; i < len(leftPaths); i++ {
+		res = append(res, strconv.Itoa(root.Val)+"->"+leftPaths[i])
 	}
-	if root.Right != nil {
-		_binaryTreePaths(root.Right, opt)
+	rightPaths := binaryTreePaths(root.Right)
+	for i := 0; i < len(rightPaths); i++ {
+		res = append(res, strconv.Itoa(root.Val)+"->"+rightPaths[i])
 	}
+	return res
 }
 
 func main() {

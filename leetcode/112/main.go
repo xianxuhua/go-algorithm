@@ -9,23 +9,19 @@ type TreeNode struct {
 }
 
 func hasPathSum(root *TreeNode, targetSum int) bool {
-	traverse(root, func(i int) {
-		fmt.Println(i)
-	})
-	return false
-}
-
-func traverse(root *TreeNode, opt func(int)) {
 	if root == nil {
-		return
+		return false
 	}
-	opt(root.Val)
-	if root.Left != nil {
-		traverse(root.Left, opt)
+
+	if root.Left == nil && root.Right == nil {
+		return targetSum == root.Val
 	}
-	if root.Right != nil {
-		traverse(root.Right, opt)
+
+	if hasPathSum(root.Left, targetSum-root.Val) || hasPathSum(root.Right, targetSum-root.Val) {
+		return true
 	}
+
+	return false
 }
 
 func main() {

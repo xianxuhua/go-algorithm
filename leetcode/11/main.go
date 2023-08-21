@@ -2,31 +2,38 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
+
+func min(a, b int) int {
+	if a > b {
+		return b
+	} else {
+		return a
+	}
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	} else {
+		return b
+	}
+}
 
 func maxArea(height []int) int {
 	i, j := 0, len(height)-1
-	maxA := float64(j-i) * math.Min(float64(height[i]), float64(height[j]))
+	res := 0
 	for i < j {
-		newIA := float64(j-(i+1)) * math.Min(float64(height[i+1]), float64(height[j]))
-		newJA := float64((j-1)-i) * math.Min(float64(height[i]), float64(height[j-1]))
-		if newIA > newJA {
+		area := (j - i) * min(height[i], height[j])
+		res = max(area, res)
+		if height[i] < height[j] {
 			i++
 		} else {
 			j--
 		}
-		if newIA > maxA {
-			maxA = newIA
-			i++
-		} else if newJA > maxA {
-			maxA = newJA
-			j--
-		}
-		fmt.Println(i, j)
 	}
 
-	return int(maxA)
+	return res
 }
 
 func main() {

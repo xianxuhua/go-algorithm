@@ -8,24 +8,21 @@ type ListNode struct {
 }
 
 func reverseList(head *ListNode) *ListNode {
-	arr := []int{}
-	cur := head
+	if head == nil {
+		return nil
+	}
+	if head.Next == nil {
+		return head
+	}
+	var pre *ListNode = nil
+	cur, next := head, head.Next
 	for cur != nil {
-		arr = append(arr, cur.Val)
-		cur = cur.Next
+		next = cur.Next
+		cur.Next = pre
+		pre = cur
+		cur = next
 	}
-	for i := 0; i < len(arr)/2; i++ {
-		arr[i], arr[len(arr)-i-1] = arr[len(arr)-i-1], arr[i]
-	}
-	newL := &ListNode{Val: arr[0]}
-	newHead := newL
-	for i := 1; i < len(arr); i++ {
-		newL.Next = &ListNode{
-			Val: arr[i],
-		}
-		newL = newL.Next
-	}
-	return newHead
+	return pre
 }
 
 func main() {

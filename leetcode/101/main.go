@@ -20,7 +20,7 @@ func _isSymmetric(left, right *TreeNode) bool {
 	if left == nil && right == nil {
 		return true
 	}
-	if left == nil || right == nil || left.Val != right.Val {
+	if left == nil && right != nil || right == nil && left != nil || left.Val != right.Val {
 		return false
 	}
 
