@@ -3,13 +3,7 @@ package main
 import "fmt"
 
 func max3(a, b, c int) int {
-	if a > b && a > c {
-		return a
-	} else if b > a && b > c {
-		return b
-	} else {
-		return c
-	}
+	return max(a, max(b, c))
 }
 
 func integerBreak(n int) int {

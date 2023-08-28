@@ -1,22 +1,41 @@
 package main
 
 import (
+	"algorithm/graph/conpoment"
+	"algorithm/graph/path"
 	"algorithm/graph/sparse"
 	"fmt"
+	"os"
 )
 
-func main() {
-	//denseGraph := dense.InitGraph(3, false)
-	//denseGraph.AddEdge(1, 2)
-	//denseGraph.Show()
-	//fmt.Println(denseGraph.TraverseEdge(1))
+func readGraphFromFile(filename string) sparse.Graph {
+	file, err := os.Open(filename)
+	defer file.Close()
+	if err != nil {
+		panic(err)
+	}
+	var n, m int
+	fmt.Fscanf(file, "%d %d", &n, &m)
+	graph := sparse.InitGraph(n, false)
+	for i := 0; i < m; i++ {
+		var v, w int
+		fmt.Fscanf(file, "%d %d", &v, &w)
+		graph.AddEdge(v, w)
+	}
+	return graph
+}
 
-	spareGraph := sparse.InitGraph(3, false)
-	spareGraph.AddEdge(1, 0)
-	spareGraph.AddEdge(1, 2)
-	spareGraph.Show()
-	fmt.Println(spareGraph.TraverseEdge(1))
-	c := sparse.InitConnectedComponent(spareGraph)
-	fmt.Println("ConnectedComponent", c.Count())
-	fmt.Println("Path", c.Path(2))
+func main() {
+
+	//fmt.Println(spareGraph.TraverseEdge(1))
+	spareGraph1 := readGraphFromFile("/Users/xxh/projects/go/algorithm/graph/g1.txt")
+	spareGraph2 := readGraphFromFile("/Users/xxh/projects/go/algorithm/graph/g2.txt")
+	c1 := conpoment.InitConnectedComponent(spareGraph1)
+	c2 := conpoment.InitConnectedComponent(spareGraph2)
+	fmt.Println("ConnectedComponent", c1.Count())
+	fmt.Println("ConnectedComponent", c2.Count())
+	fmt.Println("IsConnected", c1.IsConnected(0, 1))
+	fmt.Println("dfs Path", c1.Path(6))
+	shortestPath := path.InitShortestPath(spareGraph1)
+	fmt.Println("bfs Path", shortestPath.Path(0, 6))
 }

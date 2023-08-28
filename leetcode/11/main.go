@@ -4,22 +4,6 @@ import (
 	"fmt"
 )
 
-func min(a, b int) int {
-	if a > b {
-		return b
-	} else {
-		return a
-	}
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	} else {
-		return b
-	}
-}
-
 func maxArea(height []int) int {
 	i, j := 0, len(height)-1
 	res := 0

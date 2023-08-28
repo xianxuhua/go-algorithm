@@ -1,6 +1,7 @@
-package sparse
+package dense
 
 import (
+	"algorithm/graph/weight/edge"
 	"fmt"
 )
 
@@ -9,13 +10,13 @@ type Graph struct {
 	n, m int
 	// 是否为有向图
 	directed bool
-	g        [][]int
+	g        [][]*edge.Edge
 }
 
 func InitGraph(n int, directed bool) Graph {
-	g := make([][]int, n)
+	g := make([][]*edge.Edge, n)
 	for i := 0; i < n; i++ {
-		g[i] = make([]int, 0)
+		g[i] = make([]*edge.Edge, n)
 	}
 	return Graph{
 		n:        n,
@@ -27,7 +28,7 @@ func InitGraph(n int, directed bool) Graph {
 
 // N return point number
 func (g *Graph) N() int {
-	return g.n
+	return g.m
 }
 
 // M return edge number
@@ -36,25 +37,27 @@ func (g *Graph) M() int {
 }
 
 func (g *Graph) Show() {
-	fmt.Println("**********************")
 	for i := 0; i < g.n; i++ {
-		for j := 0; j < len(g.g[i]); j++ {
-			fmt.Print(g.g[i][j], " ")
+		for j := 0; j < g.n; j++ {
+			if g.g[i][j] != nil {
+				fmt.Printf("%.2f   ", g.g[i][j].W)
+			} else {
+				fmt.Print("nil", "   ")
+			}
 		}
 		fmt.Println()
 	}
-	fmt.Println("**********************")
 }
 
 // AddEdge add edge of point v and w
-func (g *Graph) AddEdge(v, w int) {
+func (g *Graph) AddEdge(v, w int, weight float32) {
 	if g.hasEdge(v, w) {
 		return
 	}
 
-	g.g[v] = append(g.g[v], w)
-	if v != w && !g.directed {
-		g.g[w] = append(g.g[w], v)
+	g.g[v][w] = &edge.Edge{I: v, J: w, W: weight}
+	if !g.directed {
+		g.g[w][v] = &edge.Edge{I: w, J: v, W: weight}
 	}
 	g.m++
 }
@@ -64,16 +67,15 @@ func (g *Graph) hasEdge(v, w int) bool {
 		panic("index out of range")
 	}
 
-	for i := 0; i < len(g.g[v]); i++ {
-		if g.g[v][i] == w {
-			return true
-		}
-	}
-
-	return false
+	return g.g[v][w] != nil
 }
 
-// TraverseEdge return the Adjacent nodes of node v
 func (g *Graph) TraverseEdge(v int) []int {
-	return g.g[v]
+	res := []int{}
+	for i, val := range g.g[v] {
+		if val != nil {
+			res = append(res, i)
+		}
+	}
+	return res
 }
