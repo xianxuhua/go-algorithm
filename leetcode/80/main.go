@@ -1,23 +1,36 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
+
+type Pair struct {
+	first, second int
+}
 
 func removeDuplicates(nums []int) int {
-	count := 0
-	j := len(nums) - 1
-	for i := 1; i < len(nums); i++ {
-		if nums[i] == nums[i-1] {
-			count++
-			if count >= 2 {
-				nums[i], nums[j] = nums[j], nums[i]
-			}
-		} else {
-			j--
-			count = 0
+	m := make(map[int]int)
+	for i := 0; i < len(nums); i++ {
+		if v, ok := m[nums[i]]; !ok || ok && v < 2 {
+			m[nums[i]]++
 		}
 	}
-	fmt.Println(nums, j, nums[j:])
-	return len(nums) - j
+	pairs := []Pair{}
+	for k, v := range m {
+		pairs = append(pairs, Pair{first: k, second: v})
+	}
+	res := []int{}
+	sort.SliceStable(pairs, func(i, j int) bool {
+		return pairs[i].first < pairs[j].first
+	})
+	for _, v := range pairs {
+		for i := 0; i < v.second; i++ {
+			res = append(res, v.first)
+		}
+	}
+	copy(nums, res)
+	return len(res)
 }
 
 func main() {

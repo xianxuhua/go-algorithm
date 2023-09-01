@@ -2,7 +2,7 @@ package main
 
 import (
 	"algorithm/graph/conpoment"
-	"algorithm/graph/path"
+	"algorithm/graph/path/bst"
 	"algorithm/graph/sparse"
 	"fmt"
 	"os"
@@ -25,9 +25,7 @@ func readGraphFromFile(filename string) sparse.Graph {
 	return graph
 }
 
-func main() {
-
-	//fmt.Println(spareGraph.TraverseEdge(1))
+func testConnectedComponent() {
 	spareGraph1 := readGraphFromFile("/Users/xxh/projects/go/algorithm/graph/g1.txt")
 	spareGraph2 := readGraphFromFile("/Users/xxh/projects/go/algorithm/graph/g2.txt")
 	c1 := conpoment.InitConnectedComponent(spareGraph1)
@@ -36,6 +34,18 @@ func main() {
 	fmt.Println("ConnectedComponent", c2.Count())
 	fmt.Println("IsConnected", c1.IsConnected(0, 1))
 	fmt.Println("dfs Path", c1.Path(6))
-	shortestPath := path.InitShortestPath(spareGraph1)
+}
+
+func testShortestPath() {
+	spareGraph1 := readGraphFromFile("/Users/xxh/projects/go/algorithm/graph/g1.txt")
+	shortestPath := bst.InitShortestPath(spareGraph1)
 	fmt.Println("bfs Path", shortestPath.Path(0, 6))
+}
+
+func testHeap() {
+
+}
+
+func main() {
+
 }

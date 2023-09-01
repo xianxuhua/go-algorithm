@@ -1,4 +1,4 @@
-package path
+package bst
 
 import (
 	"algorithm/graph/sparse"

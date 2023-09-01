@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"math"
 	"strconv"
+	"time"
 )
 
 func isHappy(n int) bool {
 	l := len(strconv.Itoa(n))
+	startTime := time.Now()
 	for {
 		r := 0
 		for i := 0; i < l; i++ {
@@ -20,10 +22,15 @@ func isHappy(n int) bool {
 		if n == 1 {
 			return true
 		}
+		if time.Since(startTime) > time.Millisecond {
+			return false
+		}
 	}
 }
 
 func main() {
 	fmt.Println(isHappy(19))
 	fmt.Println(isHappy(2))
+	fmt.Println(isHappy(26))
+	fmt.Println(isHappy(50))
 }

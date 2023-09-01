@@ -9,26 +9,24 @@ type TreeNode struct {
 }
 
 func sumOfLeftLeaves(root *TreeNode) int {
-	if root == nil {
-		return 0
-	}
+	q := []*TreeNode{}
+	q = append(q, root)
 	sum := 0
-	_sumOfLeftLeaves(root, root, func(node *TreeNode) {
-		sum += node.Val
-	})
-	return sum
-}
+	for len(q) > 0 {
+		t := q[0]
+		q = q[1:]
 
-func _sumOfLeftLeaves(node, parent *TreeNode, opt func(treeNode *TreeNode)) {
-	if node == nil {
-		return
+		if t.Left != nil && t.Left.Left == nil && t.Left.Right == nil {
+			sum += t.Left.Val
+		}
+		if t.Left != nil {
+			q = append(q, t.Left)
+		}
+		if t.Right != nil {
+			q = append(q, t.Right)
+		}
 	}
-	if node.Left == nil && node.Right == nil &&
-		fmt.Sprintf("%q", node) == fmt.Sprintf("%q", parent.Left) {
-		opt(node)
-	}
-	_sumOfLeftLeaves(node.Left, node, opt)
-	_sumOfLeftLeaves(node.Right, node, opt)
+	return sum
 }
 
 func main() {
